@@ -1,0 +1,6 @@
+@OPS.Web_HostAddress = http://localhost:5291
+
+GET {{OPS.Web_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
