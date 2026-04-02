@@ -1,6 +1,6 @@
 # Order Processing System
 
-A backend E-commerce Order Processing System built with **ASP.NET Core 9**, **Entity Framework Core**, **Dapper**, and **SQL Server**.
+A backend E-commerce Order Processing System built with **ASP.NET Core 9**, **Entity Framework Core**, and **SQL Server**.
 
 ## Architecture
 
@@ -17,42 +17,22 @@ OPS.BackgroundServices  → .NET Worker Service (PENDING → PROCESSING every 5 
 | Concern | Technology |
 |---|---|
 | Framework | ASP.NET Core 9 |
-| ORM (writes) | Entity Framework Core 9 |
-| ORM (reads) | Dapper |
+| ORM | Entity Framework Core 9 |
 | Database | SQL Server 2022 |
 | Auth | JWT Bearer |
 | Validation | FluentValidation |
-| Logging | Serilog (rolling file) |
 | API Docs | Swagger / Swashbuckle |
 | Unit Tests | xUnit + Moq + FluentAssertions |
 | Integration Tests | xUnit + WebApplicationFactory + SQLite |
-| Containerization | Docker Compose |
 
 ## Prerequisites
 
 - [.NET 9 SDK](https://dotnet.microsoft.com/download)
-- SQL Server (local or Docker)
-- Docker & Docker Compose (optional)
+- SQL Server (local or remote)
 
 ---
 
-## Option 1 — Run with Docker Compose
-
-```bash
-docker-compose up --build
-```
-
-This starts:
-- SQL Server on port `1433`
-- Web API on `http://localhost:5000`
-- Background Worker
-
-**Swagger UI:** http://localhost:5000/swagger  
-**Health check:** http://localhost:5000/health
-
----
-
-## Option 2 — Run Locally
+## Running Locally
 
 ### 1. Update connection string
 
@@ -110,7 +90,7 @@ GET /api/v1/products
 
 ### Add Shipping Address
 ```http
-POST /api/v1/customers/{customerId}/addresses
+POST /api/v1/customers/{id}/addresses
 { "line1": "123 Main St", "city": "New York", "state": "NY", "zip": "10001", "country": "US" }
 ```
 
@@ -129,7 +109,7 @@ POST /api/v1/orders
 GET    /api/v1/orders                     # list all (filter: ?status=Pending)
 GET    /api/v1/orders/{id}                # get by ID with full history
 PUT    /api/v1/orders/{id}/status         # update status
-POST   /api/v1/orders/{id}/cancel         # cancel (PENDING or PROCESSING only)
+POST   /api/v1/orders/{id}/cancel         # cancel (PENDING only)
 ```
 
 ---
@@ -174,6 +154,5 @@ OrderProcessingSystem/
 ├── tests/
 │   ├── OPS.UnitTests/
 │   └── OPS.IntegrationTests/
-├── docker-compose.yml
 └── README.md
 ```
